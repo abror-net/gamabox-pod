@@ -4,68 +4,68 @@ function run_test_case () {
   _helm_diff_and_install  \
     ${_TEST_DIR}/gold/subchart-zookeeper.gold  \
     hdfs-k8s  \
-    -n my-hdfs-zookeeper  \
+    -n blue-monday-zookeeper  \
     --values ${_TEST_DIR}/values/common.yaml  \
     --set tags.ha=false  \
     --set condition.subchart.zookeeper=true  \
-    --set zookeeper.fullnameOverride=my-hdfs-zookeeper  \
-    --set global.fullnameOverride=my-hdfs
+    --set zookeeper.fullnameOverride=blue-monday-zookeeper  \
+    --set global.fullnameOverride=blue-monday
 
   _helm_diff_and_install  \
     ${_TEST_DIR}/gold/subchart-config.gold  \
     hdfs-k8s  \
-    -n my-hdfs-config  \
+    -n blue-monday-config  \
     --values ${_TEST_DIR}/values/common.yaml  \
     --set tags.ha=false  \
     --set condition.subchart.config=true  \
-    --set global.fullnameOverride=my-hdfs
+    --set global.fullnameOverride=blue-monday
 
   _helm_diff_and_install  \
     ${_TEST_DIR}/gold/subchart-journalnode.gold  \
     hdfs-k8s  \
-    -n my-hdfs-journalnode  \
+    -n blue-monday-journalnode  \
     --values ${_TEST_DIR}/values/common.yaml  \
     --set tags.ha=false  \
     --set condition.subchart.journalnode=true  \
-    --set global.fullnameOverride=my-hdfs
+    --set global.fullnameOverride=blue-monday
 
   _helm_diff_and_install  \
     ${_TEST_DIR}/gold/subchart-namenode.gold  \
     hdfs-k8s  \
-    -n my-hdfs-namenode  \
+    -n blue-monday-namenode  \
     --values ${_TEST_DIR}/values/common.yaml  \
     --set tags.ha=false  \
     --set condition.subchart.namenode=true  \
-    --set global.fullnameOverride=my-hdfs
+    --set global.fullnameOverride=blue-monday
 
   _helm_diff_and_install  \
     ${_TEST_DIR}/gold/subchart-datanode.gold  \
     hdfs-k8s  \
-    -n my-hdfs-datanode  \
+    -n blue-monday-datanode  \
     --values ${_TEST_DIR}/values/common.yaml  \
     --set tags.ha=false  \
     --set condition.subchart.datanode=true  \
-    --set global.fullnameOverride=my-hdfs
+    --set global.fullnameOverride=blue-monday
 
   _helm_diff_and_install  \
     ${_TEST_DIR}/gold/subchart-client.gold  \
     hdfs-k8s  \
-    -n my-hdfs-client \
+    -n blue-monday-client \
     --values ${_TEST_DIR}/values/common.yaml  \
     --set tags.ha=false  \
     --set condition.subchart.client=true  \
-    --set global.fullnameOverride=my-hdfs
+    --set global.fullnameOverride=blue-monday
 
   if [[ "${DRY_RUN_ONLY:-false}" = "true" ]]; then
     return
   fi
 
-  k8s_single_pod_ready -l app=zookeeper,release=my-hdfs-zookeeper
-  k8s_all_pods_ready 3 -l app=hdfs-journalnode,release=my-hdfs-journalnode
-  k8s_all_pods_ready 2 -l app=hdfs-namenode,release=my-hdfs-namenode
-  k8s_single_pod_ready -l app=hdfs-datanode,release=my-hdfs-datanode
-  k8s_single_pod_ready -l app=hdfs-client,release=my-hdfs-client
-  _CLIENT=$(kubectl get pods -l app=hdfs-client,release=my-hdfs-client -o name |  \
+  k8s_single_pod_ready -l app=zookeeper,release=blue-monday-zookeeper
+  k8s_all_pods_ready 3 -l app=hdfs-journalnode,release=blue-monday-journalnode
+  k8s_all_pods_ready 2 -l app=hdfs-namenode,release=blue-monday-namenode
+  k8s_single_pod_ready -l app=hdfs-datanode,release=blue-monday-datanode
+  k8s_single_pod_ready -l app=hdfs-client,release=blue-monday-client
+  _CLIENT=$(kubectl get pods -l app=hdfs-client,release=blue-monday-client -o name |  \
       cut -d/ -f 2)
   echo Found client pod: $_CLIENT
 
@@ -87,12 +87,12 @@ function run_test_case () {
 }
 
 function cleanup_test_case() {
-  local charts="my-hdfs-client  \
-    my-hdfs-datanode  \
-    my-hdfs-namenode  \
-    my-hdfs-journalnode  \
-    my-hdfs-config  \
-    my-hdfs-zookeeper"
+  local charts="blue-monday-client  \
+    blue-monday-datanode  \
+    blue-monday-namenode  \
+    blue-monday-journalnode  \
+    blue-monday-config  \
+    blue-monday-zookeeper"
   for chart in $charts; do
     helm delete --purge $chart || true
   done

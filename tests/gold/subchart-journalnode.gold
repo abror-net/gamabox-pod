@@ -1,7 +1,7 @@
 
 
 
-NAME:   my-hdfs-journalnode
+NAME:   blue-monday-journalnode
 REVISION: 1
 CHART: hdfs-0.1.0
 USER-SUPPLIED VALUES:
@@ -12,7 +12,7 @@ global:
   dataNodeHostPath:
   - /mnt/sda1/hdfs-data
   defaultAffinityEnabled: false
-  fullnameOverride: my-hdfs
+  fullnameOverride: blue-monday
   zookeeperQuorumSize: 1
 hdfs-namenode-k8s:
   hostNetworkEnabled: false
@@ -34,7 +34,7 @@ global:
   dataNodeHostPath:
   - /mnt/sda1/hdfs-data
   defaultAffinityEnabled: false
-  fullnameOverride: my-hdfs
+  fullnameOverride: blue-monday
   journalnodeQuorumSize: 3
   jsvcEnabled: true
   kerberosConfigFileName: krb5.conf
@@ -60,7 +60,7 @@ hdfs-journalnode-k8s:
     dataNodeHostPath:
     - /mnt/sda1/hdfs-data
     defaultAffinityEnabled: false
-    fullnameOverride: my-hdfs
+    fullnameOverride: blue-monday
     journalnodeQuorumSize: 3
     jsvcEnabled: true
     kerberosConfigFileName: krb5.conf
@@ -128,11 +128,11 @@ MANIFEST:
 apiVersion: v1
 kind: Service
 metadata:
-  name: my-hdfs-journalnode
+  name: blue-monday-journalnode
   labels:
     app: hdfs-journalnode
     chart: hdfs-journalnode-k8s-0.1.0
-    release: my-hdfs-journalnode
+    release: blue-monday-journalnode
   annotations:
     # TODO: Deprecated. Replace tolerate-unready-endpoints with
     # v1.Service.PublishNotReadyAddresses.
@@ -146,25 +146,25 @@ spec:
   clusterIP: None
   selector:
     app: hdfs-journalnode
-    release: my-hdfs-journalnode
+    release: blue-monday-journalnode
 ---
 # Source: hdfs/charts/hdfs-journalnode-k8s/templates/journalnode-statefulset.yaml
 apiVersion: apps/v1beta1
 kind: StatefulSet
 metadata:
-  name: my-hdfs-journalnode
+  name: blue-monday-journalnode
   labels:
     app: hdfs-journalnode
     chart: hdfs-journalnode-k8s-0.1.0
-    release: my-hdfs-journalnode
+    release: blue-monday-journalnode
 spec:
-  serviceName: my-hdfs-journalnode
+  serviceName: blue-monday-journalnode
   replicas: 3
   template:
     metadata:
       labels:
         app: hdfs-journalnode
-        release: my-hdfs-journalnode
+        release: blue-monday-journalnode
     spec:
       containers:
         - name: hdfs-journalnode
@@ -196,7 +196,7 @@ spec:
       volumes:
         - name: hdfs-config
           configMap:
-            name: my-hdfs-config
+            name: blue-monday-config
   volumeClaimTemplates:
     - metadata:
         name: editdir
@@ -211,14 +211,14 @@ spec:
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
-  name: my-hdfs-journalnode
+  name: blue-monday-journalnode
   labels:
     app: hdfs-journalnode
     chart: hdfs-journalnode-k8s-0.1.0
-    release: my-hdfs-journalnode
+    release: blue-monday-journalnode
 spec:
   selector:
     matchLabels:
       app: hdfs-journalnode
-      release: my-hdfs-journalnode
+      release: blue-monday-journalnode
   minAvailable: 2

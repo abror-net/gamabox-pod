@@ -1,7 +1,7 @@
 
 
 
-NAME:   my-hdfs-namenode
+NAME:   blue-monday-namenode
 REVISION: 1
 CHART: hdfs-0.1.0
 USER-SUPPLIED VALUES:
@@ -12,7 +12,7 @@ global:
   dataNodeHostPath:
   - /mnt/sda1/hdfs-data
   defaultAffinityEnabled: false
-  fullnameOverride: my-hdfs
+  fullnameOverride: blue-monday
   zookeeperQuorumSize: 1
 hdfs-namenode-k8s:
   hostNetworkEnabled: false
@@ -34,7 +34,7 @@ global:
   dataNodeHostPath:
   - /mnt/sda1/hdfs-data
   defaultAffinityEnabled: false
-  fullnameOverride: my-hdfs
+  fullnameOverride: blue-monday
   journalnodeQuorumSize: 3
   jsvcEnabled: true
   kerberosConfigFileName: krb5.conf
@@ -83,7 +83,7 @@ hdfs-namenode-k8s:
     dataNodeHostPath:
     - /mnt/sda1/hdfs-data
     defaultAffinityEnabled: false
-    fullnameOverride: my-hdfs
+    fullnameOverride: blue-monday
     journalnodeQuorumSize: 3
     jsvcEnabled: true
     kerberosConfigFileName: krb5.conf
@@ -130,11 +130,11 @@ MANIFEST:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: my-hdfs-namenode-scripts
+  name: blue-monday-namenode-scripts
   labels:
     app: hdfs-namenode
     chart: hdfs-namenode-k8s-0.1.0
-    release: my-hdfs-namenode
+    release: blue-monday-namenode
 data:
   # A bootstrap script which will start namenode daemons after conducting
   # optional metadata initialization steps. The metadata initialization
@@ -202,11 +202,11 @@ data:
 apiVersion: v1
 kind: Service
 metadata:
-  name: my-hdfs-namenode
+  name: blue-monday-namenode
   labels:
     app: hdfs-namenode
     chart: hdfs-namenode-k8s-0.1.0
-    release: my-hdfs-namenode
+    release: blue-monday-namenode
   annotations:
     # TODO: Deprecated. Replace tolerate-unready-endpoints with
     # v1.Service.PublishNotReadyAddresses.
@@ -220,25 +220,25 @@ spec:
   clusterIP: None
   selector:
     app: hdfs-namenode
-    release: my-hdfs-namenode
+    release: blue-monday-namenode
 ---
 # Source: hdfs/charts/hdfs-namenode-k8s/templates/namenode-statefulset.yaml
 apiVersion: apps/v1beta1
 kind: StatefulSet
 metadata:
-  name: my-hdfs-namenode
+  name: blue-monday-namenode
   labels:
     app: hdfs-namenode
     chart: hdfs-namenode-k8s-0.1.0
-    release: my-hdfs-namenode
+    release: blue-monday-namenode
 spec:
-  serviceName: my-hdfs-namenode
+  serviceName: blue-monday-namenode
   replicas: 2
   template:
     metadata:
       labels:
         app: hdfs-namenode
-        release: my-hdfs-namenode
+        release: blue-monday-namenode
     spec:
       dnsPolicy: ClusterFirst
       containers:
@@ -256,9 +256,9 @@ spec:
                 fieldRef:
                   fieldPath: metadata.name
             - name: NAMENODE_POD_0
-              value: my-hdfs-namenode-0
+              value: blue-monday-namenode-0
             - name: NAMENODE_POD_1
-              value: my-hdfs-namenode-1
+              value: blue-monday-namenode-1
           command: ['/bin/sh', '-c']
           # The start script is provided by a config map.
           args:
@@ -285,11 +285,11 @@ spec:
       volumes:
         - name: nn-scripts
           configMap:
-            name: my-hdfs-namenode-scripts
+            name: blue-monday-namenode-scripts
             defaultMode: 0744
         - name: hdfs-config
           configMap:
-            name: my-hdfs-config
+            name: blue-monday-config
   volumeClaimTemplates:
     - metadata:
         name: metadatadir
@@ -304,14 +304,14 @@ spec:
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
-  name: my-hdfs-namenode
+  name: blue-monday-namenode
   labels:
     app: hdfs-namenode
     chart: hdfs-namenode-k8s-0.1.0
-    release: my-hdfs-namenode
+    release: blue-monday-namenode
 spec:
   selector:
     matchLabels:
       app: hdfs-namenode
-      release: my-hdfs-namenode
+      release: blue-monday-namenode
   minAvailable: 1

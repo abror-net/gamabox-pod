@@ -1,7 +1,7 @@
 
 
 
-NAME:   my-hdfs
+NAME:   sunday-morning
 REVISION: 1
 CHART: hdfs-0.1.0
 USER-SUPPLIED VALUES:
@@ -377,11 +377,11 @@ MANIFEST:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: my-hdfs-config
+  name: sunday-morning-config
   labels:
     app: hdfs-client
     chart: hdfs-config-k8s-0.1.0
-    release: my-hdfs
+    release: sunday-morning
 data:
   core-site.xml: |
     <?xml version="1.0"?>
@@ -393,7 +393,7 @@ data:
       </property>
       <property>
         <name>ha.zookeeper.quorum</name>
-        <value>my-hdfs-zookeeper-0.my-hdfs-zookeeper-headless.default.svc.cluster.local:2181</value>
+        <value>sunday-morning-zookeeper-0.sunday-morning-zookeeper-headless.default.svc.cluster.local:2181</value>
       </property>
     </configuration>
   hdfs-site.xml: |
@@ -410,23 +410,23 @@ data:
       </property>
       <property>
         <name>dfs.namenode.rpc-address.hdfs-k8s.nn0</name>
-        <value>my-hdfs-namenode-0.my-hdfs-namenode.default.svc.cluster.local:8020</value>
+        <value>sunday-morning-namenode-0.sunday-morning-namenode.default.svc.cluster.local:8020</value>
       </property>
       <property>
         <name>dfs.namenode.rpc-address.hdfs-k8s.nn1</name>
-        <value>my-hdfs-namenode-1.my-hdfs-namenode.default.svc.cluster.local:8020</value>
+        <value>sunday-morning-namenode-1.sunday-morning-namenode.default.svc.cluster.local:8020</value>
       </property>
       <property>
         <name>dfs.namenode.http-address.hdfs-k8s.nn0</name>
-        <value>my-hdfs-namenode-0.my-hdfs-namenode.default.svc.cluster.local:50070</value>
+        <value>sunday-morning-namenode-0.sunday-morning-namenode.default.svc.cluster.local:50070</value>
       </property>
       <property>
         <name>dfs.namenode.http-address.hdfs-k8s.nn1</name>
-        <value>my-hdfs-namenode-1.my-hdfs-namenode.default.svc.cluster.local:50070</value>
+        <value>sunday-morning-namenode-1.sunday-morning-namenode.default.svc.cluster.local:50070</value>
       </property>
       <property>
         <name>dfs.namenode.shared.edits.dir</name>
-        <value>qjournal://my-hdfs-journalnode-1.my-hdfs-journalnode.default.svc.cluster.local:8485;my-hdfs-journalnode-2.my-hdfs-journalnode.default.svc.cluster.local:8485;my-hdfs-journalnode-0.my-hdfs-journalnode.default.svc.cluster.local:8485/hdfs-k8s</value>
+        <value>qjournal://sunday-morning-journalnode-1.sunday-morning-journalnode.default.svc.cluster.local:8485;sunday-morning-journalnode-2.sunday-morning-journalnode.default.svc.cluster.local:8485;sunday-morning-journalnode-0.sunday-morning-journalnode.default.svc.cluster.local:8485/hdfs-k8s</value>
       </property>
       <property>
         <name>dfs.ha.automatic-failover.enabled</name>
@@ -463,11 +463,11 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: my-hdfs-datanode-scripts
+  name: sunday-morning-datanode-scripts
   labels:
     app: hdfs-datanode
     chart: hdfs-datanode-k8s-0.1.0
-    release: my-hdfs
+    release: sunday-morning
 data:
   check-status.sh: |
     #!/usr/bin/env bash
@@ -500,11 +500,11 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: my-hdfs-namenode-scripts
+  name: sunday-morning-namenode-scripts
   labels:
     app: hdfs-namenode
     chart: hdfs-namenode-k8s-0.1.0
-    release: my-hdfs
+    release: sunday-morning
 data:
   # A bootstrap script which will start namenode daemons after conducting
   # optional metadata initialization steps. The metadata initialization
@@ -572,11 +572,11 @@ data:
 apiVersion: v1
 kind: Service
 metadata:
-  name: my-hdfs-journalnode
+  name: sunday-morning-journalnode
   labels:
     app: hdfs-journalnode
     chart: hdfs-journalnode-k8s-0.1.0
-    release: my-hdfs
+    release: sunday-morning
   annotations:
     # TODO: Deprecated. Replace tolerate-unready-endpoints with
     # v1.Service.PublishNotReadyAddresses.
@@ -590,18 +590,18 @@ spec:
   clusterIP: None
   selector:
     app: hdfs-journalnode
-    release: my-hdfs
+    release: sunday-morning
 ---
 # Source: hdfs/charts/hdfs-namenode-k8s/templates/namenode-statefulset.yaml
 # A headless service to create DNS records.
 apiVersion: v1
 kind: Service
 metadata:
-  name: my-hdfs-namenode
+  name: sunday-morning-namenode
   labels:
     app: hdfs-namenode
     chart: hdfs-namenode-k8s-0.1.0
-    release: my-hdfs
+    release: sunday-morning
   annotations:
     # TODO: Deprecated. Replace tolerate-unready-endpoints with
     # v1.Service.PublishNotReadyAddresses.
@@ -615,17 +615,17 @@ spec:
   clusterIP: None
   selector:
     app: hdfs-namenode
-    release: my-hdfs
+    release: sunday-morning
 ---
 # Source: hdfs/charts/zookeeper/templates/service-headless.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: my-hdfs-zookeeper-headless
+  name: sunday-morning-zookeeper-headless
   labels:
     app: zookeeper
     chart: zookeeper-1.0.0
-    release: my-hdfs
+    release: sunday-morning
     heritage: Tiller
 spec:
   clusterIP: None
@@ -644,17 +644,17 @@ spec:
       protocol: TCP
   selector:
     app: zookeeper
-    release: my-hdfs
+    release: sunday-morning
 ---
 # Source: hdfs/charts/zookeeper/templates/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: my-hdfs-zookeeper
+  name: sunday-morning-zookeeper
   labels:
     app: zookeeper
     chart: zookeeper-1.0.0
-    release: my-hdfs
+    release: sunday-morning
     heritage: Tiller
   annotations:
 spec:
@@ -667,7 +667,7 @@ spec:
       
   selector:
     app: zookeeper
-    release: my-hdfs
+    release: sunday-morning
 ---
 # Source: hdfs/charts/hdfs-datanode-k8s/templates/datanode-daemonset.yaml
 # Deleting a daemonset may need some trick. See
@@ -675,17 +675,17 @@ spec:
 apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
-  name: my-hdfs-datanode
+  name: sunday-morning-datanode
   labels:
     app: hdfs-datanode
     chart: hdfs-datanode-k8s-0.1.0
-    release: my-hdfs
+    release: sunday-morning
 spec:
   template:
     metadata:
       labels:
         app: hdfs-datanode
-        release: my-hdfs
+        release: sunday-morning
     spec:
       hostNetwork: true
       hostPID: true
@@ -727,7 +727,7 @@ spec:
       volumes:
         - name: dn-scripts
           configMap:
-            name: my-hdfs-datanode-scripts
+            name: sunday-morning-datanode-scripts
             defaultMode: 0744
         - name: hdfs-data-0
           hostPath:
@@ -737,29 +737,29 @@ spec:
             path: /mnt/sda1/hdfs-data1
         - name: hdfs-config
           configMap:
-            name: my-hdfs-config
+            name: sunday-morning-config
 ---
 # Source: hdfs/charts/hdfs-client-k8s/templates/client-deployment.yaml
 apiVersion: apps/v1
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: my-hdfs-client
+  name: sunday-morning-client
   labels:
     app: hdfs-client
     chart: hdfs-client-k8s-0.1.0
-    release: my-hdfs
+    release: sunday-morning
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: hdfs-client
-      release: my-hdfs
+      release: sunday-morning
   template:
     metadata:
       labels:
         app: hdfs-client
-        release: my-hdfs
+        release: sunday-morning
     spec:
       containers:
         - name: hdfs-client
@@ -780,25 +780,25 @@ spec:
       volumes:
         - name: hdfs-config
           configMap:
-            name: my-hdfs-config
+            name: sunday-morning-config
 ---
 # Source: hdfs/charts/hdfs-journalnode-k8s/templates/journalnode-statefulset.yaml
 apiVersion: apps/v1beta1
 kind: StatefulSet
 metadata:
-  name: my-hdfs-journalnode
+  name: sunday-morning-journalnode
   labels:
     app: hdfs-journalnode
     chart: hdfs-journalnode-k8s-0.1.0
-    release: my-hdfs
+    release: sunday-morning
 spec:
-  serviceName: my-hdfs-journalnode
+  serviceName: sunday-morning-journalnode
   replicas: 3
   template:
     metadata:
       labels:
         app: hdfs-journalnode
-        release: my-hdfs
+        release: sunday-morning
     spec:
       containers:
         - name: hdfs-journalnode
@@ -830,7 +830,7 @@ spec:
       volumes:
         - name: hdfs-config
           configMap:
-            name: my-hdfs-config
+            name: sunday-morning-config
   volumeClaimTemplates:
     - metadata:
         name: editdir
@@ -845,19 +845,19 @@ spec:
 apiVersion: apps/v1beta1
 kind: StatefulSet
 metadata:
-  name: my-hdfs-namenode
+  name: sunday-morning-namenode
   labels:
     app: hdfs-namenode
     chart: hdfs-namenode-k8s-0.1.0
-    release: my-hdfs
+    release: sunday-morning
 spec:
-  serviceName: my-hdfs-namenode
+  serviceName: sunday-morning-namenode
   replicas: 2
   template:
     metadata:
       labels:
         app: hdfs-namenode
-        release: my-hdfs
+        release: sunday-morning
     spec:
       dnsPolicy: ClusterFirst
       containers:
@@ -875,9 +875,9 @@ spec:
                 fieldRef:
                   fieldPath: metadata.name
             - name: NAMENODE_POD_0
-              value: my-hdfs-namenode-0
+              value: sunday-morning-namenode-0
             - name: NAMENODE_POD_1
-              value: my-hdfs-namenode-1
+              value: sunday-morning-namenode-1
           command: ['/bin/sh', '-c']
           # The start script is provided by a config map.
           args:
@@ -904,11 +904,11 @@ spec:
       volumes:
         - name: nn-scripts
           configMap:
-            name: my-hdfs-namenode-scripts
+            name: sunday-morning-namenode-scripts
             defaultMode: 0744
         - name: hdfs-config
           configMap:
-            name: my-hdfs-config
+            name: sunday-morning-config
   volumeClaimTemplates:
     - metadata:
         name: metadatadir
@@ -923,21 +923,21 @@ spec:
 apiVersion: apps/v1beta1
 kind: StatefulSet
 metadata:
-  name: my-hdfs-zookeeper
+  name: sunday-morning-zookeeper
   labels:
     app: zookeeper
     chart: zookeeper-1.0.0
-    release: my-hdfs
+    release: sunday-morning
     heritage: Tiller
     component: server
 spec:
-  serviceName: my-hdfs-zookeeper-headless
+  serviceName: sunday-morning-zookeeper-headless
   replicas: 1
   terminationGracePeriodSeconds: 1800
   selector:
     matchLabels:
       app: zookeeper
-      release: my-hdfs
+      release: sunday-morning
       component: server
   updateStrategy:
     type: OnDelete
@@ -946,7 +946,7 @@ spec:
     metadata:
       labels:
         app: zookeeper
-        release: my-hdfs
+        release: sunday-morning
         component: server
       annotations:
     spec:
@@ -1047,49 +1047,49 @@ spec:
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
-  name: my-hdfs-journalnode
+  name: sunday-morning-journalnode
   labels:
     app: hdfs-journalnode
     chart: hdfs-journalnode-k8s-0.1.0
-    release: my-hdfs
+    release: sunday-morning
 spec:
   selector:
     matchLabels:
       app: hdfs-journalnode
-      release: my-hdfs
+      release: sunday-morning
   minAvailable: 2
 ---
 # Source: hdfs/charts/hdfs-namenode-k8s/templates/namenode-statefulset.yaml
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
-  name: my-hdfs-namenode
+  name: sunday-morning-namenode
   labels:
     app: hdfs-namenode
     chart: hdfs-namenode-k8s-0.1.0
-    release: my-hdfs
+    release: sunday-morning
 spec:
   selector:
     matchLabels:
       app: hdfs-namenode
-      release: my-hdfs
+      release: sunday-morning
   minAvailable: 1
 ---
 # Source: hdfs/charts/zookeeper/templates/poddisruptionbudget.yaml
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
-  name: my-hdfs-zookeeper
+  name: sunday-morning-zookeeper
   labels:
     app: zookeeper
     chart: zookeeper-1.0.0
-    release: my-hdfs
+    release: sunday-morning
     heritage: Tiller
     component: server
 spec:
   selector:
     matchLabels:
       app: zookeeper
-      release: my-hdfs
+      release: sunday-morning
       component: server
   maxUnavailable: 1

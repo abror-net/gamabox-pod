@@ -1,7 +1,7 @@
 
 
 
-NAME:   my-hdfs-datanode
+NAME:   blue-monday-datanode
 REVISION: 1
 CHART: hdfs-0.1.0
 USER-SUPPLIED VALUES:
@@ -12,7 +12,7 @@ global:
   dataNodeHostPath:
   - /mnt/sda1/hdfs-data
   defaultAffinityEnabled: false
-  fullnameOverride: my-hdfs
+  fullnameOverride: blue-monday
   zookeeperQuorumSize: 1
 hdfs-namenode-k8s:
   hostNetworkEnabled: false
@@ -34,7 +34,7 @@ global:
   dataNodeHostPath:
   - /mnt/sda1/hdfs-data
   defaultAffinityEnabled: false
-  fullnameOverride: my-hdfs
+  fullnameOverride: blue-monday
   journalnodeQuorumSize: 3
   jsvcEnabled: true
   kerberosConfigFileName: krb5.conf
@@ -56,7 +56,7 @@ hdfs-datanode-k8s:
     dataNodeHostPath:
     - /mnt/sda1/hdfs-data
     defaultAffinityEnabled: false
-    fullnameOverride: my-hdfs
+    fullnameOverride: blue-monday
     journalnodeQuorumSize: 3
     jsvcEnabled: true
     kerberosConfigFileName: krb5.conf
@@ -128,11 +128,11 @@ MANIFEST:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: my-hdfs-datanode-scripts
+  name: blue-monday-datanode-scripts
   labels:
     app: hdfs-datanode
     chart: hdfs-datanode-k8s-0.1.0
-    release: my-hdfs-datanode
+    release: blue-monday-datanode
 data:
   check-status.sh: |
     #!/usr/bin/env bash
@@ -164,17 +164,17 @@ data:
 apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
-  name: my-hdfs-datanode
+  name: blue-monday-datanode
   labels:
     app: hdfs-datanode
     chart: hdfs-datanode-k8s-0.1.0
-    release: my-hdfs-datanode
+    release: blue-monday-datanode
 spec:
   template:
     metadata:
       labels:
         app: hdfs-datanode
-        release: my-hdfs-datanode
+        release: blue-monday-datanode
     spec:
       hostNetwork: true
       hostPID: true
@@ -214,11 +214,11 @@ spec:
       volumes:
         - name: dn-scripts
           configMap:
-            name: my-hdfs-datanode-scripts
+            name: blue-monday-datanode-scripts
             defaultMode: 0744
         - name: hdfs-data-0
           hostPath:
             path: /mnt/sda1/hdfs-data
         - name: hdfs-config
           configMap:
-            name: my-hdfs-config
+            name: blue-monday-config
