@@ -19,4 +19,4 @@ global:
   # node.
   defaultAffinityEnabled: false
   dataNodeHostPath:
-    - /mnt/sda1/hdfs-data
+    - /mnt/sda2/hdfs-data

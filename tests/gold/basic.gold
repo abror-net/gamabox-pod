@@ -7,8 +7,8 @@ CHART: hdfs-0.1.0
 USER-SUPPLIED VALUES:
 global:
   dataNodeHostPath:
-  - /mnt/sda1/hdfs-data0
-  - /mnt/sda1/hdfs-data1
+  - /mnt/sda2/hdfs-data0
+  - /mnt/sda2/hdfs-data1
   defaultAffinityEnabled: false
   zookeeperQuorumSize: 1
 hdfs-config-k8s.customHadoopConfig:
@@ -30,8 +30,8 @@ zookeeper:
 COMPUTED VALUES:
 global:
   dataNodeHostPath:
-  - /mnt/sda1/hdfs-data0
-  - /mnt/sda1/hdfs-data1
+  - /mnt/sda2/hdfs-data0
+  - /mnt/sda2/hdfs-data1
   defaultAffinityEnabled: false
   journalnodeQuorumSize: 3
   jsvcEnabled: true
@@ -47,8 +47,8 @@ global:
 hdfs-client-k8s:
   global:
     dataNodeHostPath:
-    - /mnt/sda1/hdfs-data0
-    - /mnt/sda1/hdfs-data1
+    - /mnt/sda2/hdfs-data0
+    - /mnt/sda2/hdfs-data1
     defaultAffinityEnabled: false
     journalnodeQuorumSize: 3
     jsvcEnabled: true
@@ -67,8 +67,8 @@ hdfs-config-k8s:
     hdfsSite: {}
   global:
     dataNodeHostPath:
-    - /mnt/sda1/hdfs-data0
-    - /mnt/sda1/hdfs-data1
+    - /mnt/sda2/hdfs-data0
+    - /mnt/sda2/hdfs-data1
     defaultAffinityEnabled: false
     journalnodeQuorumSize: 3
     jsvcEnabled: true
@@ -91,8 +91,8 @@ hdfs-datanode-k8s:
   affinity: {}
   global:
     dataNodeHostPath:
-    - /mnt/sda1/hdfs-data0
-    - /mnt/sda1/hdfs-data1
+    - /mnt/sda2/hdfs-data0
+    - /mnt/sda2/hdfs-data1
     defaultAffinityEnabled: false
     journalnodeQuorumSize: 3
     jsvcEnabled: true
@@ -111,8 +111,8 @@ hdfs-journalnode-k8s:
   affinity: {}
   global:
     dataNodeHostPath:
-    - /mnt/sda1/hdfs-data0
-    - /mnt/sda1/hdfs-data1
+    - /mnt/sda2/hdfs-data0
+    - /mnt/sda2/hdfs-data1
     defaultAffinityEnabled: false
     journalnodeQuorumSize: 3
     jsvcEnabled: true
@@ -150,8 +150,8 @@ hdfs-namenode-k8s:
     sleep 10
   global:
     dataNodeHostPath:
-    - /mnt/sda1/hdfs-data0
-    - /mnt/sda1/hdfs-data1
+    - /mnt/sda2/hdfs-data0
+    - /mnt/sda2/hdfs-data1
     defaultAffinityEnabled: false
     journalnodeQuorumSize: 3
     jsvcEnabled: true
@@ -290,8 +290,8 @@ zookeeper:
       resources: {}
   global:
     dataNodeHostPath:
-    - /mnt/sda1/hdfs-data0
-    - /mnt/sda1/hdfs-data1
+    - /mnt/sda2/hdfs-data0
+    - /mnt/sda2/hdfs-data1
     defaultAffinityEnabled: false
     journalnodeQuorumSize: 3
     jsvcEnabled: true
@@ -454,7 +454,7 @@ data:
       </property>
       <property>
         <name>dfs.datanode.data.dir</name>
-        <value>/mnt/sda1/hdfs-data0,/mnt/sda1/hdfs-data1</value>
+        <value>/mnt/sda2/hdfs-data0,/mnt/sda2/hdfs-data1</value>
       </property>
     </configuration>
 ---
@@ -731,10 +731,10 @@ spec:
             defaultMode: 0744
         - name: hdfs-data-0
           hostPath:
-            path: /mnt/sda1/hdfs-data0
+            path: /mnt/sda2/hdfs-data0
         - name: hdfs-data-1
           hostPath:
-            path: /mnt/sda1/hdfs-data1
+            path: /mnt/sda2/hdfs-data1
         - name: hdfs-config
           configMap:
             name: abror-hdfs-config
