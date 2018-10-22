@@ -6,7 +6,7 @@ function run_test_case () {
     -n abror-hdfs  \
     --values ${_TEST_DIR}/values/common.yaml  \
     --values ${_TEST_DIR}/values/custom-hadoop-config.yaml  \
-    --set "global.dataNodeHostPath={/mnt/sda1/hdfs-data0,/mnt/sda1/hdfs-data1}"
+    --set "global.dataNodeHostPath={/home/liga/data/hdfs-data0,/home/liga/data/hdfs-data1}"
 
   if [[ "${DRY_RUN_ONLY:-false}" = "true" ]]; then
     return

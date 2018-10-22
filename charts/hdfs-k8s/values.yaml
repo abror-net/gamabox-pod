@@ -46,7 +46,7 @@ hdfs-journalnode-k8s:
     #   matchLabels:
     #     volume-type: hdfs-ssd
     accessMode: ReadWriteOnce
-    size: 1Gi
+    size: 100Gi
 
   ## Node labels and tolerations for pod assignment
   nodeSelector: {}
@@ -88,7 +88,7 @@ hdfs-namenode-k8s:
 
     accessMode: ReadWriteOnce
 
-    size: 5Gi
+    size: 100Gi
 
   ## Whether or not to use hostNetwork in namenode pods. Disabling this will break
   ## data locality as namenode will see pod virtual IPs and fails to equate them with
@@ -146,7 +146,7 @@ hdfs-krb5-k8s:
 
     accessMode: ReadWriteOnce
 
-    size: 1Gi
+    size: 10Gi
 
   ## We use a 3rd party image built from https://github.com/gcavalcante8808/docker-krb5-server.
   ## TODO: The pod currently prints out the admin account in plain text.
