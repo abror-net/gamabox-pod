@@ -108,7 +108,7 @@ hdfs-simple-namenode-k8s:
   ## Path of the local disk directory on a cluster node that will contain the namenode
   ## fsimage and edit logs. This will be mounted to the namenode as a k8s HostPath
   ## volume.
-  nameNodeHostPath: /dind/hdfs-name
+  nameNodeHostPath: /home/liga/kubernetes/data/alpha/hdfs-name
 
   ## Node labels and tolerations for pod assignment
   nodeSelector: {}
@@ -175,7 +175,7 @@ global:
   ## In a command line, the list should be enclosed in '{' and '}'.
   ## e.g. --set "dataNodeHostPath={/hdfs-data,/hdfs-data1}"
   dataNodeHostPath:
-    - /dind/hdfs-data
+    - /home/liga/kubernetes/data/sub-alpha,/home/liga/kubernetes/data/sub-alpha1
 
   ## Parameters for determining which Unix user and group IDs to use in pods.
   ## Persistent volume permission may need to match these.
